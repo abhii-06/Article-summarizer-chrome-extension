@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Summary</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  
+  <div class="header-container">
+    <h2 class="title"><span class="neon-ai">AI</span> <span class="bolder-word">SummarizerV1</span></h2>
+    <button id="settings-icon" class="icon-btn">&#9881;</button>
+  </div>
+
+  <div class="tabs">
+    <button id="tab-summary" class="tab-btn active">Summarization</button>
+    <button id="tab-history" class="tab-btn">History</button>
+  </div>
+
+  <div id="tab-summary-content" class="tab-content active">
+
+    <div class="controls">
+      <select id="summary-type">
+        <option value="brief">Short Summary</option>
+        <option value="detailed">Detailed Summary</option>
+        <option value="bullets">Bullet Points</option>
+      </select>
+      <button id="summarize" class="main-btn">Summarize</button>
+    </div>
+
+    <textarea id="manual-input" placeholder="Paste text here (optional)" class="manual-box"></textarea>
+
+    <div id="result" class="result-box">
+      <div class="floating-actions">
+        <button id="copy-btn" class="icon-btn">Copy</button>
+        <button id="listen-btn" class="icon-btn">Listen</button>
+      </div>
+      <div id="result-content">
+        Select summary type & click Summarize.
+      </div>
+    </div>
+
+  </div>
+
+  <div id="tab-history-content" class="tab-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h3 style="margin: 0;">History</h3>
+        <button id="clear-history-btn" class="icon-btn" style="background: #dc3545;">Clear All</button>
+    </div>
+    <div id="history-list" class="history-list">No saved summaries.</div>
+  </div>
+
+  <div id="tab-settings-content" class="tab-content">
+    
+    <h3 style="margin-bottom: 15px;">Appearance</h3>
+    <div class="controls" style="flex-direction: column; gap: 10px; margin-bottom: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="theme-select" style="font-weight: 600;">Theme:</label>
+            <select id="theme-select" class="setting-control">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+    </div>
+
+    <h3 style="margin-bottom: 15px;">Text-to-Speech (TTS) Settings</h3>
+    
+    <div class="controls" id="tts-controls" style="flex-direction: column; gap: 15px;">
+        
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="tts-voice" style="font-weight: 600;">Voice Selection:</label>
+            <select id="tts-voice" class="setting-control">
+                <option value="">System Default Voice</option>
+            </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="tts-rate" style="font-weight: 600;">Speech Speed:</label>
+            <select id="tts-rate" class="setting-control">
+                <option value="1.0">Normal Speed</option>
+                <option value="1.5">1.5x Speed</option>
+                <option value="2.0">2.0x Speed</option>
+                <option value="0.75">0.75x Speed</option>
+            </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="tts-pitch" style="font-weight: 600;">Speech Pitch:</label>
+            <select id="tts-pitch" class="setting-control">
+                <option value="1.0">Normal Pitch</option>
+                <option value="1.5">High Pitch</option>
+                <option value="0.75">Low Pitch</option>
+            </select>
+        </div>
+        
+    </div>
+
+    <h3 style="margin-top: 30px; margin-bottom: 15px;">Extension Management</h3>
+    
+    <button id="open-options-page" class="main-btn" style="width: 100%; margin-bottom: 10px;">
+        Manage API Key (Open Options Page)
+    </button>
+    
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Setup - Article Summarizer</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
+      }
+
+      html {
+        overflow-x: hidden;
+      }
+      
+      body {
+        min-height: 100vh;
+        /* Static Image Background */
+        background-image: url('images/background_ai_city.jpg'); /* REMEMBER TO REPLACE THIS PATH! */
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        
+        display: flex; /* Use flexbox to vertically center content */
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        overflow-x: hidden; 
+        
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        position: relative; /* Needed for pseudo-element overlay */
+      }
+      
+      body::-webkit-scrollbar {
+          display: none;
+      }
+      
+      /* Image Background Overlay (using pseudo-element for body) */
+      body::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.45); /* Adjust opacity for readability */
+          z-index: -1; /* Keep behind content */
+      }
+
+      .container {
+        width: 100%;
+        max-width: 600px;
+        /* MODIFIED: Increased transparency for the main container (0.08) */
+        background: rgba(255, 255, 255, 0.08); 
+        backdrop-filter: blur(18px);
+        border-radius: 22px;
+        padding: 35px;
+        color: #fff;
+        box-shadow: 0 8px 35px rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        z-index: 10;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 6px;
+      }
+
+      .subtitle {
+        text-align: center;
+        opacity: 0.85;
+        margin-bottom: 22px;
+        font-size: 14px;
+      }
+      
+      /* NEW: Style for the introductory paragraph */
+      .intro-text {
+          text-align: center;
+          margin-bottom: 20px;
+          font-size: 15px;
+          font-weight: 500;
+          opacity: 0.9;
+      }
+
+      .steps {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 25px;
+      }
+
+      .step {
+        text-align: center;
+        opacity: 0.45;
+        transition: 0.3s;
+      }
+
+      .step.active {
+        opacity: 1;
+      }
+
+      .circle {
+        width: 28px;
+        height: 28px;
+        background: #fff;
+        border-radius: 50%;
+        color: #4f46e5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        margin: 0 auto 6px;
+      }
+
+      .card {
+        /* MODIFIED: Increased transparency for inner cards (0.12) */
+        background: rgba(255, 255, 255, 0.12); 
+        padding: 18px;
+        border-radius: 12px;
+        margin-top: 14px;
+      }
+
+      /* Style to ensure the bold step title is separate from instructions */
+      .card p.step-instruction {
+          margin: 5px 0 10px 0; /* Add top and bottom margin */
+          font-size: 14px; /* Use smaller font for instructions */
+          line-height: 1.4;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        margin-top: 10px;
+        outline: none;
+        font-size: 15px;
+        color: #333;
+      }
+
+      .btn {
+        background: #ffffff;
+        color: #4f46e5;
+        padding: 11px 14px;
+        border: none;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: 0.25s;
+        width: 100%;
+      }
+
+      .btn:hover {
+        background: #e8e8ff;
+      }
+
+      .save-btn {
+        background: #6d28d9;
+        color: #fff;
+      }
+
+      .save-btn:hover {
+        background: #7c3aed;
+      }
+      
+      .save-btn.loading {
+          cursor: wait;
+          opacity: 0.8;
+          pointer-events: none;
+      }
+
+
+      .step-page {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .step-page.active {
+        display: block;
+        opacity: 1;
+      }
+
+      #error-message {
+        color: #ff8b8b;
+        font-size: 14px;
+        margin-top: 10px;
+        display: none;
+      }
+      
+      .privacy-box {
+        background: rgba(255, 255, 255, 0.22);
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 30px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+
+  <body>
+    
+    <div class="container">
+      <h1>Article Summarizer</h1>
+      <p class="subtitle">Welcome! Let's get you set up.</p>
+      
+      <p class="intro-text">
+          To use this extension you'll need a free API key from Google's Gemini AI service.
+      </p>
+
+      <div class="steps">
+        <div class="step active" data-step="1">
+          <div class="circle">1</div> Get API Key
+        </div>
+        <div class="step" data-step="2">
+          <div class="circle">2</div> Configure
+        </div>
+        <div class="step" data-step="3">
+          <div class="circle">3</div> Ready!
+        </div>
+      </div>
+
+      <div class="step-page active" id="step1">
+        
+        <div class="card">
+          <b>1. Visit Google AI Studio</b>
+          <p class="step-instruction">Click the button below to open Google AI Studio in a new tab.</p>
+          <button class="btn" id="open-ai-studio-btn">
+              Open Google AI Studio
+          </button>
+        </div>
+        
+        <div class="card">
+          <b>2. Create Your API Key and copy it</b>
+          <p class="step-instruction">Sign in with your Google account and click "Create API Key" and copy the generated API key.</p>
+        </div>
+
+        <div class="card">
+          <b>3. Paste the copied key here for validation:</b>
+          <input type="text" id="api-key" placeholder="Paste your API key here (e.g., AIzaSy...)">
+        </div>
+
+        <button id="save-button" class="btn save-btn">Save and Validate API Key</button>
+
+        <p id="error-message">Invalid API Key. Please try again.</p>
+      </div>
+
+      <div class="step-page" id="step2">
+        <h2>Key Verified!</h2>
+        <button class="btn save-btn" id="go-step3">Continue</button>
+      </div>
+
+      <div class="step-page" id="step3">
+        <h2>Setup Complete!</h2>
+        <button class="btn" id="close-btn">Close</button>
+      </div>
+
+      <div class="privacy-box">
+        <b>Privacy & Security</b>
+        <ul>
+          <li>Your API key is stored securely in your browser</li>
+          <li>We never see or store your API key</li>
+          <li>Article text is processed only by Google's Gemini API</li>
+          <li>No data is stored on external servers</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <script src="options.js"></script>
+  </body>
+</html>
